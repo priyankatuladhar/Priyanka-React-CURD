@@ -18,8 +18,8 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          yarn run build --if-present
-          yarn run dev --if-present
+          yarn run build 
+          yarn run dev 
       - name: Zip artifact for deployment
         run: zip release.zip ./dist/* -r
       - name: Upload artifact for deployment job
