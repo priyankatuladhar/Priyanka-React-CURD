@@ -48,6 +48,7 @@ jobs:
         run: |
           git config --global user.name 'priyanka'
           git config --global user.email 'priyankatuladhar14@gmail.com'
+          git pull
           npm version patch --no-git-tag-version
           git add package.json
           git commit -m "Increase package.json version and push"
