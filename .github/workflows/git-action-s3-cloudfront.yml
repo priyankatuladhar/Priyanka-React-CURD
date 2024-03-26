@@ -44,3 +44,11 @@ jobs:
          # bucket: priyanka-git-action-frontend  #  S3 bucket name
         #  region: us-east-1  # S3 bucket region
          # sync: true
+      - name: Package.json version
+        run: |
+          git config --global user.name 'priyanka'
+          git config --global user.email 'priyankatuladhar14@gmail.com'
+          npm version patch --no-git-tag-version
+          git add package.json
+          git commit -m "Increase package.json version and push"
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/priyankatuladhar/Priyanka-React-CURD
