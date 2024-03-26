@@ -1,1 +1,38 @@
+name: Frontend Build and Deploy
 
+on:
+  push:
+    branches: [ main ]  # Modify to trigger on desired branches
+
+jobs:
+  build-and-deploy:
+    name: dist and increase package
+    runs-on: self-hosted  
+    steps:
+      - uses: actions/checkout@v3  # Checkout code from repository
+      - name: Use Node.js 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Increase package.json version (modify as needed)
+        run: |
+          npm version patch  # Increase version by patch (modify for major/minor)
+          git add package.json
+          git commit -m "chore: increase package.json version"
+      - name: Install dependencies
+        run: npm install
+      - name: Build frontend (modify script as needed)
+        run: npm run build  
+      - name: Configure AWS credentials (securely store access key and secret as secrets)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1  # S3 bucket region
+      - name: Upload build artifacts to S3 bucket
+        uses: aws-actions/aws-s3-sync@v1
+        with:
+          source: ./dist  #  build output directory
+          bucket: priyanka-git-action-frontend  #  S3 bucket name
+          region: us-east-1  # S3 bucket region
+          sync: true
