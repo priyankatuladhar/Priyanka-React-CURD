@@ -14,11 +14,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Increase package.json version (modify as needed)
-        run: |
-          npm version patch  # Increase version by patch (modify for major/minor)
-          git add package.json
-          git commit -m "chore: increase package.json version"
+     # - name: Increase package.json version (modify as needed)
+      #  run: |
+        #  npm version patch  # Increase version by patch (modify for major/minor)
+         # git add package.json
+         # git commit -m "chore: increase package.json version"
       - name: Install dependencies
         run: npm install
       - name: Build frontend (modify script as needed)
