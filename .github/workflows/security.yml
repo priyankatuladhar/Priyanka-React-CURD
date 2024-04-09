@@ -1,4 +1,4 @@
-name: Frontend Build and Deploy
+name: stackhawk scanning
 
 on:
   push:
