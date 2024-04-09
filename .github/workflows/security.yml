@@ -1,0 +1,38 @@
+name: Frontend Build and Deploy
+
+on:
+  push:
+    branches: [ main ]  # Modify to trigger on desired branches
+
+jobs:
+  build-and-deploy:
+    name: dist and increase package
+    runs-on: ubuntu-latest 
+    env :
+      PROJECT_DIR: '/home/runner/work/Priyanka-React-CURD/Priyanka-React-CURD'
+    steps:
+      - uses: actions/checkout@v3  # Checkout code from repository
+      - name: Use Node.js 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+     # - name: Increase package.json version (modify as needed)
+      #  run: |
+        #  npm version patch  # Increase version by patch (modify for major/minor)
+         # git add package.json
+         # git commit -m "chore: increase package.json version"
+      - name: Install dependencies
+        run: npm install
+      - name: Build frontend (modify script as needed)
+        run: | 
+          npm run build  
+          yarn run dev &
+        working-directory: ${{ env.PROJECT_DIR }}
+      - name: StackHawk Scan for Dynamic Application Security Testing
+        env:
+            HAWK_ENV: Github Actions - ${{ github.repository }}
+        continue-on-error: true
+        uses: stackhawk/hawkscan-action@v2
+        with:
+          apiKey: ${{ secrets.HAWK_TOKEN }}
+     
